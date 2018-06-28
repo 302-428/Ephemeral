@@ -80,7 +80,7 @@ def proper_type(ast):
 		return True
 	if(T is pycparser.c_ast.UnaryOp and ast.op in ["!"]):
 		return True
-	if(T is pycparser.c_ast.BinaryOp):
+	if(T is pycparser.c_ast.EmptyStatement):
 		return True
 	return False
 
