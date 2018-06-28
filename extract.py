@@ -106,6 +106,6 @@ def report(ast) :
 		return flag
 
 report(ast)
-for i in xrange(0, len(astlist)):
+for i in range(0, len(astlist)):
 	print("Printing AST")
 	astlist[i].show(showcoord=True)
