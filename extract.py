@@ -108,7 +108,7 @@ def report(ast) :
 		if(type(ast) is pycparser.c_ast.Compound):
 			compound_list_flag.append(child_flag)
 	
-	if(type(ast) is pycparser.c_ast.Compound):
+	if(type(ast) is pycparser.c_ast.Compound and not flag):
 		st = 0
 		for i in range(0, len(ast_children)):
 			if(not compound_list_flag[i]):
