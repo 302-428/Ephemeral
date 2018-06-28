@@ -31,6 +31,7 @@ struct data {
 typedef int Node, Hash;
 void foo(int a, int b) {
 	a = (a*25)+360 / 15;
+	int c = a+b;
 	a = a + b;
 	b = a+b;
 	b = a+b;
@@ -97,10 +98,27 @@ def report(ast) :
 		flag = False
 
 	ast_children = ast.children()
-	for ast_child in ast_children:
-		if(not report(ast_child[1])):
+	
+	compound_list_flag = []
+	for i in range(0, len(ast_children)):
+		ast_child = ast_children[i]
+		child_flag = report(ast_child[1])
+		if(not child_flag):
 			flag = False
-
+		if(type(ast) is pycparser.c_ast.Compound):
+			compound_list_flag.append(child_flag)
+	
+	if(type(ast) is pycparser.c_ast.Compound):
+		st = 0
+		for i in range(0, len(ast_children)):
+			if(not compound_list_flag[i]):
+				st = i+1
+				continue
+			if(st < i and (i + 1 == len(ast_children) or not compound_list_flag[i+1])):	
+				items = []
+				for j in range(st, i+1):
+					items.append(ast_children[j][1])
+				astlist.append(pycparser.c_ast.Compound(items))
 	if(flag):
 		astlist.append(ast)
 		return flag
